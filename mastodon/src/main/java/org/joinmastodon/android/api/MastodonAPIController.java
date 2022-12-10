@@ -15,6 +15,7 @@ import org.joinmastodon.android.BuildConfig;
 import org.joinmastodon.android.api.gson.IsoInstantTypeAdapter;
 import org.joinmastodon.android.api.gson.IsoLocalDateTypeAdapter;
 import org.joinmastodon.android.api.session.AccountSession;
+import org.joinmastodon.android.dns.HttpDNS;
 
 import java.io.IOException;
 import java.io.Reader;
@@ -44,7 +45,9 @@ public class MastodonAPIController{
 			.registerTypeAdapter(LocalDate.class, new IsoLocalDateTypeAdapter())
 			.create();
 	private static WorkerThread thread=new WorkerThread("MastodonAPIController");
-	private static OkHttpClient httpClient=new OkHttpClient.Builder().build();
+	private static OkHttpClient httpClient=new OkHttpClient.Builder()
+			.dns(HttpDNS.DNSSB)
+			.build();
 
 	private AccountSession session;
 
